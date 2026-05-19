@@ -136,10 +136,6 @@
         <h2 class="text-2xl font-bold mb-6">Courier</h2>
         <form class="space-y-3">
             <div class="flex items-center space-x-2">
-                <input type="radio" id="kurir-pos" value="Kurir (POS)" name="courier-option" class="courier-select form-radio text-blue-600">
-                <label for="kurir-pos" class="ml-2 text-gray-700">Kurir (POS Indonesia)</label>
-            </div>
-            <div class="flex items-center space-x-2">
                 <input type="radio" id="kurir-gosend" value="GoSend" name="courier-option" class="courier-select form-radio text-blue-600">
                 <label for="kurir-gosend" class="ml-2 text-gray-700">GoSend</label>
             </div>
