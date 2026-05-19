@@ -134,12 +134,16 @@
 
     <div class="w-full mt-4 p-8 bg-white rounded-lg shadow-md overflow-hidden">
         <h2 class="text-2xl font-bold mb-6">Courier</h2>
-        <div class="flex items-center space-x-2">
-            <form>
-                <input type="radio" id="kurir-pos" value="Kurir (POS)" name="delivery-option" class="form-radio text-blue-600">
+        <form class="space-y-3">
+            <div class="flex items-center space-x-2">
+                <input type="radio" id="kurir-pos" value="Kurir (POS)" name="courier-option" class="courier-select form-radio text-blue-600">
                 <label for="kurir-pos" class="ml-2 text-gray-700">Kurir (POS Indonesia)</label>
-            </form>
-        </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="radio" id="kurir-gosend" value="GoSend" name="courier-option" class="courier-select form-radio text-blue-600">
+                <label for="kurir-gosend" class="ml-2 text-gray-700">GoSend</label>
+            </div>
+        </form>
     </div>
 
     <div class="flex justify-end my-4">
@@ -163,7 +167,7 @@
             }
         })
 
-        $('#kurir-pos').change(function() {
+        $('.courier-select').change(function() {
             if ($(this).is(':checked')) {
                 $("#btn-submit").css("background-color", "#F46300")
             }
@@ -176,7 +180,7 @@
                 return
             }
 
-            if ($('#kurir-pos:checked').length == 0) {
+            if ($('.courier-select:checked').length == 0) {
                 alert('Please select an courier option before submitting.')
                 return
             }
@@ -188,7 +192,7 @@
                 $(this).text("Submit")
 
                 var payment = $('.payment-select:checked').val() 
-                var courier = $('#kurir-pos:checked').val()
+                var courier = $('.courier-select:checked').val()
 
                 $.ajax({
                     url: '<?= base_url("delivery/save-payment-courier") ?>', 
