@@ -72,7 +72,7 @@ class Shipping extends BaseController
     {  
         $session = session();
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $fullname = $this->request->getPost('fullname');
             $phone = $this->request->getPost('phone');
             $address = $this->request->getPost('address');

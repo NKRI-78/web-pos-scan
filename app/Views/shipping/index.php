@@ -60,14 +60,14 @@
                     <div class="mb-4">
                         <label for="select-city" class="block text-gray-700 font-medum mb-2">City *</label>
                         <select name="select-city" id="select-city" class="bg-white block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-          
+                            <option value="">Select City</option>
                         </select>
                     </div>
 
                     <div class="mb-4">
                         <label for="select-postal-code" class="block text-gray-700 font-medum mb-2">Postal Code *</label>
                         <select name="select-postal-code" id="select-postal-code" class="bg-white block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        
+                            <option value="">Select Postal Code</option>
                         </select>
                     </div>
 
@@ -104,8 +104,8 @@
             var city = $("#select-city")
             var postalCode = $("#select-postal-code")
 
-            city.html("")
-            postalCode.html("")
+            city.html("<option value=''>Select City</option>")
+            postalCode.html("<option value=''>Select Postal Code</option>")
             
             $.ajax({
                 url: getCityBaseUrl, 
@@ -147,9 +147,12 @@
             var phone = $("#phone").val()
             var address = $("#address").val()
 
-            var province = $("#select-province").val().split('-')[1]
-            var city = $("#select-city").val().split('-')[1]
-            var postalCode = $("#select-postal-code").val()
+            var provinceValue = $("#select-province").val() || ""
+            var cityValue = $("#select-city").val() || ""
+            var postalCode = $("#select-postal-code").val() || ""
+
+            var province = provinceValue.includes('-') ? provinceValue.split('-')[1] : ""
+            var city = cityValue.includes('-') ? cityValue.split('-')[1] : ""
 
             if(fullname.trim() == "") {
                 alert("Field full name is required")
@@ -166,7 +169,7 @@
                 return
             }
 
-            if(province.trim() == "" || province.trim() == "null") {
+            if(provinceValue.trim() == "" || provinceValue.trim() == "null" || province.trim() == "") {
                 alert("Field province is required")
                 return 
             }
@@ -194,7 +197,7 @@
                 },
                 success: function(response) {
                     console.log(response)
-                    location.href = "<?= base_url("checkout") ?> "
+                    location.href = "<?= base_url("checkout") ?>"
                 },
                 error: function(xhr, status, error) {
                     console.error(error)

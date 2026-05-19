@@ -6,6 +6,7 @@ use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use GuzzleHttp\Client;
 
 /**
  * BaseController provides a convenient place for loading components
@@ -46,5 +47,31 @@ abstract class BaseController extends Controller
 		helper('dummy');
 		helper('utils');
 		helper('text');
+
+        $session = session();
+        $shouldClearPos = (bool) $session->get('clear_pos_after_success');
+
+        if ($shouldClearPos) {
+            $path = trim((string) $request->getPath(), '/');
+
+            // Tetap biarkan halaman sukses tampil; clear saat user lanjut ke halaman/aksi lain
+            if ($path !== 'delivery') {
+                try {
+                    $client = new Client();
+                    $client->request('POST', 'https://api-hp3ki.langitdigital78.com/api/v1/admin/clear-cart-pos');
+                    $client->request('POST', 'https://api-hp3ki.langitdigital78.com/api/v1/admin/clear-order-pos');
+                } catch (\Throwable $e) {
+                    // silent fail agar request user tidak terganggu
+                }
+
+                $session->remove('clear_pos_after_success');
+                $session->remove('payment');
+                $session->remove('courier');
+                $session->remove('last_order_products');
+                $session->remove('last_order_total_price');
+                $session->remove('last_order_payment');
+                $session->remove('last_order_courier');
+            }
+        }
     }
 }

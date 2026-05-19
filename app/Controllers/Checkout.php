@@ -98,6 +98,9 @@ class Checkout extends BaseController
             ]);
 
             $responseData = json_decode($response->getBody()->getContents(), true);
+
+            // Clear cart setelah order berhasil dibuat
+            $client->request('POST', 'https://api-hp3ki.langitdigital78.com/api/v1/admin/clear-cart-pos');
     
             return $this->response->setJSON([
                 'status' => 'success',

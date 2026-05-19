@@ -74,6 +74,19 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="border-b border-gray-200 last:border-b-0">
+                            <div class="flex items-center p-4">
+                                <div class="flex-shrink-0">
+                                    <img src="https://i.pinimg.com/736x/69/5e/3a/695e3a709eccbe055c311aac6b25729d.jpg" class="h-8" alt="ic-qris">
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <label for="payment-qris" class="text-gray-700">QRIS</label>
+                                </div>
+                                <div class="ml-4 flex-shrink-0">
+                                    <input type="radio" id="payment-qris" value="QRIS" name="delivery-option" class="payment-select form-radio text-blue-600">
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </form>
 

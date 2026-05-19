@@ -3,30 +3,16 @@
 <?= $this->section('content') ?>
 
 <div class="container mx-auto p-6">
-
-    <div class="w-full flex flex-col items-center justify-center gap-4">
-        <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-            <h2 class="text-2xl font-bold mb-6 text-center" style="color: #F46300;">SUCCESSFULLY</h2>
-
-            <div class="p-0">
+    <div class="w-full flex flex-col items-center justify-center">
+        <div class="bg-white shadow-lg rounded-lg py-8 max-w-md w-full">
+            <div class="p-8">
                 <div class="flex flex-row items-center justify-between mb-4">
                     <p class="text-1xl" style="color: #808080;">Payment Method</p>
                     <p><?= esc($payment ?: '-') ?></p>
                 </div>
 
-                <?php if (strtoupper((string) $payment) === 'QRIS' && !empty($qris_code)): ?>
-                    <div class="flex flex-col items-center gap-3 mb-4">
-                        <img
-                            src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=<?= urlencode($qris_code) ?>"
-                            alt="QRIS Code"
-                            class="w-44 h-44 rounded"
-                        >
-                    </div>
-                <?php else: ?>
-                    <h3 class="text-1xl font-bold text-center mb-4" style="color: #2563E0;">VA - 7654567890987654563422</h3>
-                <?php endif; ?>
-
                 <h3 class="text-2xl font-bold">Detail Order</h3>
+
                 <?php foreach ($products as $product): ?>
                     <div class="flex flex-row items-center justify-between mt-4">
                         <p class="text-1xl" style="color: #808080;"><?= esc($product['name']) ?> x <?= esc($product['qty']) ?></p>
@@ -45,17 +31,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="flex gap-3">
-            <a href="<?= base_url('/tracking') ?>" class="text-center px-8 inline-block text-white py-2 rounded-lg" style="background-color: #F46300;">
-                Lihat Tracking
-            </a>
-            <a href="<?= base_url() ?>" class="text-center px-8 inline-block text-white py-2 rounded-lg" style="background-color: #6B7280;">
-                Next Order
-            </a>
-        </div>
     </div>
-
 </div>
 
 <?= $this->endSection() ?>

@@ -8,7 +8,7 @@ use App\Controllers\Base;
 
 class Delivery extends BaseController
 {
-    public function index(): string
+    public function index()
     {
         $client = new Client();
         $response = $client->request('POST', 'https://api-hp3ki.langitdigital78.com/api/v1/admin/order-pos');
@@ -24,13 +24,26 @@ class Delivery extends BaseController
         $payment = $session->get('payment');
         $courier = $session->get('courier');
 
-        $client->request('POST', 'https://api-hp3ki.langitdigital78.com/api/v1/admin/clear-cart-pos');
+        // Simpan snapshot order terakhir agar halaman tracking/detail tidak kosong
+        $session->set('last_order_products', $products);
+        $session->set('last_order_total_price', $totalPrice);
+        $session->set('last_order_payment', $payment);
+        $session->set('last_order_courier', $courier);
+
+        // tandai agar cart+order dibersihkan saat user kembali ke Home
+        $session->set('clear_pos_after_success', true);
+
+        $qrisCode = null;
+        if (strtoupper((string) $payment) === 'QRIS') {
+            $qrisCode = 'QRIS-' . strtoupper(substr(md5((string) microtime(true) . rand(1000, 9999)), 0, 16));
+        }
 
         return view('delivery/index', [
             "products" => $products,
             "total_price" => $totalPrice,
             "payment" => $payment,
-            "courier" => $courier
+            "courier" => $courier,
+            "qris_code" => $qrisCode
         ]);
     }
 
@@ -38,7 +51,7 @@ class Delivery extends BaseController
     {
         $session = session();
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             
             $payment = $this->request->getPost('payment');
             $courier = $this->request->getPost('courier');

@@ -9,6 +9,7 @@
     $data = json_decode($response->getBody(), true);
 
     $cartCount = count(($data["data"]));
+    $currentSegment = $uri->getSegment(1) ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +42,9 @@
 
             <div class="hidden lg:block navbar-c flex-1 rounded-md py-4 my-4 ml-12 mr-12">
                 <div class="container mx-auto flex justify-around items-center">
-                    <a href="<?= base_url() ?>" class="<?=$uri->getSegment(1) === 'term-and-condition' ? ' font-bold text-white' : 'text-white' ?>">Cart (<?= $cartCount ?>)</a>
-                    <a href="<?= base_url('/tracking') ?>" class="<?=$uri->getSegment(1) === 'about-us' ? ' font-bold text-white' : 'text-white' ?>">My Orders</a>
+                    <a href="<?= base_url() ?>" class="<?= $currentSegment === '' ? 'font-bold text-white' : 'text-white' ?>">Cart (<?= $cartCount ?>)</a>
+                    <a href="<?= base_url('/my-orders') ?>" class="<?= $currentSegment === 'my-orders' ? 'font-bold text-white' : 'text-white' ?>">My Orders</a>
+                    <a href="<?= base_url('/tracking') ?>" class="<?= $currentSegment === 'tracking' ? 'font-bold text-white' : 'text-white' ?>">Tracking</a>
                 </div>
             </div>
 
@@ -54,7 +56,9 @@
                 </div>
                 <nav class="mobile-menu z-50">
                     <ul class="menu-items">
-                        <li><a href="<?= base_url('/tracking') ?>" class="text-sm">My Orders</a></li>
+                        <li><a href="<?= base_url() ?>" class="text-sm">Cart (<?= $cartCount ?>)</a></li>
+                        <li><a href="<?= base_url('/my-orders') ?>" class="text-sm">My Orders</a></li>
+                        <li><a href="<?= base_url('/tracking') ?>" class="text-sm">Tracking</a></li>
                     </ul>
                 </nav>
             </div>

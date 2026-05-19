@@ -8,7 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Order::index');
 
+$routes->get('/my-orders', 'Order::myOrders');
 $routes->get('/tracking', 'Order::tracking');
+$routes->get('/tracking-dummy', 'Order::trackingDummy');
 
 $routes->post('/remove-cart', 'Order::removeCart');
 
